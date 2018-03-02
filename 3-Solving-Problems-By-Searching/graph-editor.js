@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    const [WIDTH, HEIGHT] = [600, 400];
+    const [WIDTH, HEIGHT] = [600, 350];
 
     const NODE_RADIUS = 16;
 
@@ -13,7 +13,7 @@ $(document).ready(function() {
     let currLastId;
     let freeIds = [];
 
-    let graph = new DefaultGraph();
+    let graph = _pageGraph;
     window.graph = graph;
 
     function init() {
@@ -161,6 +161,10 @@ $(document).ready(function() {
     }
 
     function createEdge(src, dst) {
+        if (src === dst) {
+            return;
+        }
+
         // check if the edge already exists
         // and don't create the edge if it does
         for (let edge of graph.edges) {
@@ -171,7 +175,7 @@ $(document).ready(function() {
         }
 
         const edge = [src, dst].sort();
-        edge.push(0); // cost
+        edge.push(Math.floor(1 + Math.random() * 10)); // use a random cost
         graph.edges.push(edge);
 
         updateEdges();
@@ -300,17 +304,21 @@ $(document).ready(function() {
                     if (d3.event.key === 'Enter') {
                         this.blur();
 
-                        cb(this.value);
-
                         d3.event.preventDefault(); // stops form submission
                         d3.event.stopPropagation();
                     }
 
                     if (d3.event.key === 'Escape') {
+                        // cancel changes
+                        this.value = initialValue;
                         this.blur();
                     }
                 })
                 .on('blur', function () {
+                    if (this.value !== initialValue) {
+                        cb(this.value);
+                    }
+
                     editBox
                         .classed('hidden', true)
                 })
@@ -409,3 +417,35 @@ function indexToLabel(index) {
 function nextLabel(label) {
     return indexToLabel(labelToIndex(label) + 1);
 }
+
+
+$(document).ready(function() {
+    const $graphEditor = $('.graph-editor');
+    const $toggleButton = $('#graphEditorToggleButton');
+    const $loadButton = $('#graphEditorLoadButton');
+    const $statusText = $('#graphEditorStatusText');
+
+    $toggleButton.on('click', function () {
+        $graphEditor.toggleClass('collapsed');
+        $loadButton.toggleClass('collapsed');
+        const verb = $graphEditor.hasClass('collapsed') ? 'Show' : 'Hide';
+        $toggleButton.text(verb + ' Graph Editor');
+    })
+
+    $loadButton.on('click', function () {
+        __NodeExpansionInit();
+        __AgentViewInit();
+        __BreadthFirstSearchInit();
+        __DepthFirstSearchInit();
+        __CostDetailsInit();
+        __UniformCostSearchInit();
+        __AStarSearchInit();
+
+        $statusText
+            .hide()
+            .text('Done!')
+            .fadeIn()
+            .delay(2000)
+            .fadeOut()
+    })
+})

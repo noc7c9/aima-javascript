@@ -69,6 +69,9 @@ $(document).ready(function() {
     var bfsGraphDrawAgent, ucsGraphDrawAgent;
     ucsPathCanvas = document.getElementById('lowestCostDetailCanvas');
     bfsPathCanvas = document.getElementById('bfsCostDetailCanvas');
+
+    $('#bfsCostDetailCanvas > svg, #lowestCostDetailCanvas > svg').remove();
+
     bfsTwo = new Two({
       height: h,
       width: w
@@ -121,4 +124,7 @@ $(document).ready(function() {
     ucsGraphDrawAgent = new GraphDrawAgent(graphProblem, 'costGraphCanvas', options, h, w);
   };
   init();
+
+    // FOR GRAPH EDITOR
+    window.__CostDetailsInit = init;
 });

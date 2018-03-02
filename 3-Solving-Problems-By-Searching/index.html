@@ -42,10 +42,26 @@
      * graph editor styles
      */
 
+    #graphEditorLoadButton {
+        transition: opacity 0.25s, visibility 0.25s;
+    }
+    #graphEditorLoadButton.collapsed {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .graph-editor {
+        height: 370px;
+        transition: height 0.25s;
+        overflow: hidden;
+    }
+    .graph-editor.collapsed {
+        height: 0;
+    }
+
     .graph-editor svg {
         margin-top: 1rem;
         border: 1px solid black;
-        width: 100%;
 
         -webkit-user-select: none;
         -moz-user-select: none;
@@ -87,12 +103,14 @@
 
       <div class="row">
         <div class="col-md-12">
-          <div class='btn btn-primary' id='graphEditorToggleButton'>Toggle</div>
-          <div class='btn btn-primary' id='graphEditorLoadButton'>Load This Graph</div>
+          <div class='btn btn-primary' id='graphEditorToggleButton'>Show Graph
+              Editor</div>
+          <div class='btn btn-primary collapsed' id='graphEditorLoadButton'>Load This Graph</div>
+          <div style='display:inline;' id='graphEditorStatusText'></div>
         </div>
       </div>
 
-      <div class="row graph-editor">
+      <div class="row graph-editor collapsed">
         <div class="col-md-12" id='graphEditorCanvas'>
         </div>
       </div>

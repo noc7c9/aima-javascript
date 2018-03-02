@@ -97,7 +97,7 @@ $(document).ready(function() {
     let ac = new AnimationController({
       selector: '#ucsAC',
       min: 0,
-      max: 15,
+      max: Object.keys(_pageGraph.nodes).length - 1,
       renderer: drawState
     });
     ac.renderFirst();
@@ -107,6 +107,9 @@ $(document).ready(function() {
   $('#ucsNextNode').css('background-color', 'hsl(126, 100%, 69%)');
   $('#ucsExploredNode').css('background-color', 'hsl(200,50%,70%)');
   init();
+
+    // FOR GRAPH EDITOR
+    window.__UniformCostSearchInit = init;
 });
 //Function to draw the list of nodes for both canvas
 function drawList(two, list, problem, options, costMap) {

@@ -82,47 +82,60 @@ var DefaultOptions = function() {
       }
     }
   }
+
   // The default graph that is used in most of the simulation
   // This ensures consistency in the experience of the user
+var _pageGraph = {
+    nodes: {
+        'A': new GraphNode(50, 100, 'A', 'A'),
+        'B': new GraphNode(20, 150, 'B', 'B'),
+        'C': new GraphNode(75, 180, 'C', 'C'),
+        'D': new GraphNode(100, 100, 'D', 'D'),
+        'E': new GraphNode(230, 100, 'E', 'E'),
+        'F': new GraphNode(180, 160, 'F', 'F'),
+        'G': new GraphNode(70, 300, 'G', 'G'),
+        'H': new GraphNode(120, 240, 'H', 'H'),
+        'I': new GraphNode(300, 150, 'I', 'I'),
+        'J': new GraphNode(280, 250, 'J', 'J'),
+        'K': new GraphNode(400, 220, 'K', 'K'),
+        'L': new GraphNode(200, 280, 'L', 'L'),
+        'M': new GraphNode(380, 100, 'M', 'M'),
+        'N': new GraphNode(350, 300, 'N', 'N'),
+        'O': new GraphNode(450, 320, 'O', 'O')
+    },
+    edges: [
+        ['A', 'B', 3],
+        ['A', 'D', 6],
+        ['B', 'C', 1],
+        ['C', 'D', 1],
+        ['C', 'G', 5],
+        ['C', 'H', 2],
+        ['D', 'E', 3],
+        ['D', 'F', 1],
+        ['E', 'I', 5],
+        ['F', 'J', 2],
+        ['H', 'L', 8],
+        ['I', 'J', 1],
+        ['I', 'K', 1],
+        ['I', 'M', 3],
+        ['J', 'L', 5],
+        ['J', 'N', 2],
+        ['K', 'N', 2],
+        ['L', 'N', 6],
+        ['N', 'O', 2]
+    ]
+}
 var DefaultGraph = function() {
-  this.nodes = {
-    'A': new GraphNode(50, 100, 'A', 'A'),
-    'B': new GraphNode(20, 150, 'B', 'B'),
-    'C': new GraphNode(75, 180, 'C', 'C'),
-    'D': new GraphNode(100, 100, 'D', 'D'),
-    'E': new GraphNode(230, 100, 'E', 'E'),
-    'F': new GraphNode(180, 160, 'F', 'F'),
-    'G': new GraphNode(70, 300, 'G', 'G'),
-    'H': new GraphNode(120, 240, 'H', 'H'),
-    'I': new GraphNode(300, 150, 'I', 'I'),
-    'J': new GraphNode(280, 250, 'J', 'J'),
-    'K': new GraphNode(400, 220, 'K', 'K'),
-    'L': new GraphNode(200, 280, 'L', 'L'),
-    'M': new GraphNode(380, 100, 'M', 'M'),
-    'N': new GraphNode(350, 300, 'N', 'N'),
-    'O': new GraphNode(450, 320, 'O', 'O')
-  };
-  this.edges = [
-    ['A', 'B', 3],
-    ['A', 'D', 6],
-    ['B', 'C', 1],
-    ['C', 'D', 1],
-    ['C', 'G', 5],
-    ['C', 'H', 2],
-    ['D', 'E', 3],
-    ['D', 'F', 1],
-    ['E', 'I', 5],
-    ['F', 'J', 2],
-    ['H', 'L', 8],
-    ['I', 'J', 1],
-    ['I', 'K', 1],
-    ['I', 'M', 3],
-    ['J', 'L', 5],
-    ['J', 'N', 2],
-    ['K', 'N', 2],
-    ['L', 'N', 6],
-    ['N', 'O', 2]
-  ];
+    this.nodes = {}
+    this.edges = [];
+
+    // clone
+    for (let node of Object.values(_pageGraph.nodes)) {
+        this.nodes[node.id] = new GraphNode(node.x, node.y, node.id, node.text);
+    }
+    for (let edge of _pageGraph.edges) {
+        this.edges.push([edge[0], edge[1], edge[2]]);
+    }
 };
 
 

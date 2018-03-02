@@ -58,7 +58,7 @@ $(document).ready(function() {
     let ac = new AnimationController({
       selector: '#dfsAC',
       min: 0,
-      max: 15,
+      max: Object.keys(_pageGraph.nodes).length - 1,
       renderer: drawState
     });
     ac.renderFirst();
@@ -67,4 +67,7 @@ $(document).ready(function() {
   $('#lifoWaiting').css('background-color', 'hsl(0,50%,75%)');
   $('#lifoNextNode').css('background-color', 'hsl(126, 100%, 69%)');
   init();
+
+    // FOR GRAPH EDITOR
+    window.__DepthFirstSearchInit = init;
 });

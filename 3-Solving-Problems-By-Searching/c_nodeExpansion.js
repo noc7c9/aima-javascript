@@ -43,6 +43,9 @@ $(document).ready(function() {
   };
   $('#nodeRestartButton').click(init);
   init();
+
+    // FOR GRAPH EDITOR
+    window.__NodeExpansionInit = init;
 });
 
 $(document).ready(function() {
@@ -52,7 +55,9 @@ $(document).ready(function() {
 
   function init() {
     var graph = new DefaultGraph();
-    var graphProblem = new GraphProblem(graph.nodes, graph.edges, String.fromCharCode(65 + Math.random() * 15), null);
+    var nodeIds = Object.keys(graph.nodes)
+    var randomId = nodeIds[Math.floor(Math.random() * nodeIds.length)]
+    var graphProblem = new GraphProblem(graph.nodes, graph.edges, randomId, null);
     var graphAgent = new GraphAgent(graphProblem);
     var graphDrawAgent = new GraphDrawAgent(graphProblem, 'agentViewCanvas', options, h, w);
     //For this simulation, unexplored nodes and edges needs to be invisible
@@ -82,6 +87,9 @@ $(document).ready(function() {
   $('#legendFrontier').css('background-color', options.nodes.frontier.fill);
   $('#legendUnexplored').css('background-color', options.nodes.unexplored.fill);
   init();
+
+    // FOR GRAPH EDITOR
+    window.__AgentViewInit = init;
 });
 
 //Function to draw the frontier nodes

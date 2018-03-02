@@ -464,4 +464,12 @@ AStarSearchRenderer.templates = {
   }
 };
 
-var astar = new AStarSearchRenderer();
+var astar;
+function astarInit() {
+    astar = new AStarSearchRenderer();
+}
+
+astarInit();
+
+// FOR GRAPH EDITOR
+window.__AStarSearchInit = astarInit;

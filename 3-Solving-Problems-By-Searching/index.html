@@ -37,17 +37,63 @@
       height: 15px;
       display: inline-block;
     }
+
+    /***
+     * graph editor styles
+     */
+
+    .graph-editor svg {
+        margin-top: 1rem;
+        border: 1px solid black;
+        width: 100%;
+
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .graph-editor .drag-line {
+        stroke: black;
+        stroke-width: 2.5;
+    }
+
+    .graph-editor .node circle {
+        fill: rgb(193, 193, 193);
+        stroke: black;
+        stroke-width: 1;
+    }
+    .graph-editor .node:hover circle {
+        fill: rgb(140, 191, 217);
+    }
+
+    .graph-editor .edge .thin-line {
+        stroke: black;
+        stroke-width: 1;
+    }
+    .graph-editor .edge:hover .thin-line {
+        stroke: rgb(69, 128, 255);
+    }
+    .graph-editor .edge .thick-line {
+        stroke: rgba(0, 0, 0, 0);
+        stroke-width: 15;
+    }
   </style>
 </head>
 
 <body>
-  <div class="row">
-    <div class="col-sm-6 col-md-10 col-md-offset-1" id="content">
+  <div class="container">
+    <div class="" id="content">
 
       <div class="row">
         <div class="col-md-12">
-          <div class="canvas" id='graphEditorCanvas' height="400px">
-          </div>
+          <div class='btn btn-primary' id='graphEditorToggleButton'>Toggle</div>
+          <div class='btn btn-primary' id='graphEditorLoadButton'>Load This Graph</div>
+        </div>
+      </div>
+
+      <div class="row graph-editor">
+        <div class="col-md-12" id='graphEditorCanvas'>
         </div>
       </div>
 

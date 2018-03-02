@@ -127,6 +127,7 @@ $(document).ready(function() {
             .attr('class', 'thick-line')
 
         edge.append('text')
+            .attr('dominant-baseline', 'middle')
     }
 
     function renderNode(node) {
@@ -134,7 +135,7 @@ $(document).ready(function() {
             .attr('r', NODE_RADIUS)
 
         node.append('text')
-            .text((d) => d.text)
+            .attr('dominant-baseline', 'middle')
     }
 
     /***
@@ -427,7 +428,6 @@ $(document).ready(function() {
 
     $toggleButton.on('click', function () {
         $graphEditor.toggleClass('collapsed');
-        $loadButton.toggleClass('collapsed');
         const verb = $graphEditor.hasClass('collapsed') ? 'Show' : 'Hide';
         $toggleButton.text(verb + ' Graph Editor');
     })

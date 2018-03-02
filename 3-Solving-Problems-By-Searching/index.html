@@ -42,14 +42,6 @@
      * graph editor styles
      */
 
-    #graphEditorLoadButton {
-        transition: opacity 0.25s, visibility 0.25s;
-    }
-    #graphEditorLoadButton.collapsed {
-        opacity: 0;
-        visibility: hidden;
-    }
-
     .graph-editor {
         height: 370px;
         transition: height 0.25s;
@@ -105,13 +97,32 @@
         <div class="col-md-12">
           <div class='btn btn-primary' id='graphEditorToggleButton'>Show Graph
               Editor</div>
-          <div class='btn btn-primary collapsed' id='graphEditorLoadButton'>Load This Graph</div>
-          <div style='display:inline;' id='graphEditorStatusText'></div>
         </div>
       </div>
 
       <div class="row graph-editor collapsed">
-        <div class="col-md-12" id='graphEditorCanvas'>
+        <div class="col-md-8" id='graphEditorCanvas'></div>
+        <div class="col-md-4">
+            <p>How to edit:</p>
+            <ul>
+                <li>Click and drag nodes around to move them.</li>
+            </ul>
+            <ul>
+                <li>Ctrl-click empty space to create a new node.</li>
+                <li>Ctrl-click a node then drag to create a new edge.</li>
+            </ul>
+            <ul>
+                <li>Ctrl-shift-click a node to delete it.</li>
+                <li>Ctrl-shift-click an edge to delete it.</li>
+            </ul>
+            <ul>
+                <li>Double-click a node to change its label.</li>
+                <li>Double-click an edge to change its cost.</li>
+            </ul>
+            <p>When done, press the button below to load this graph into the
+                visualizations on this page.</p>
+            <div class='btn btn-primary collapsed' id='graphEditorLoadButton'>Load This Graph</div>
+            <div style='display:inline;' id='graphEditorStatusText'></div>
         </div>
       </div>
 

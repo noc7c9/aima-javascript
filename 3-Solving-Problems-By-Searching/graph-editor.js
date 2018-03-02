@@ -216,6 +216,12 @@ $(document).ready(function() {
         return null;
     }
 
+    function clampNodePosition([x, y]) {
+        x = Math.max(NODE_RADIUS, Math.min(WIDTH - NODE_RADIUS, x));
+        y = Math.max(NODE_RADIUS, Math.min(HEIGHT - NODE_RADIUS, y));
+        return [x, y];
+    }
+
     /***
      * drag behaviour
      */
@@ -249,8 +255,7 @@ $(document).ready(function() {
         })
 
     function onNodeDrag(d) {
-        d.x = d3.event.x;
-        d.y = d3.event.y;
+        [d.x, d.y] = clampNodePosition([d3.event.x, d3.event.y]);
 
         // update the node
         d3.select(this)
@@ -262,23 +267,29 @@ $(document).ready(function() {
     }
 
     function onEdgeDragStart(d) {
+        const [x, y] = d3.mouse(canvas.node());
+
         dragLine
-            .attr('x1', d.x)
-            .attr('y1', d.y)
-            .attr('x2', d.x)
-            .attr('y2', d.y)
+            .attr('x1', x)
+            .attr('y1', y)
+            .attr('x2', x)
+            .attr('y2', y)
             .classed('hidden', false)
     }
 
     function onEdgeDrag(d) {
+        const [x, y] = d3.mouse(canvas.node());
+
         dragLine
-            .attr('x2', d3.event.x)
-            .attr('y2', d3.event.y)
+            .attr('x2', x)
+            .attr('y2', y)
     }
 
     function onEdgeDragEnd(d) {
+        const [x, y] = d3.mouse(canvas.node());
+
         const startNode = d.id;
-        const endNode = hitTestNodes(d3.event.x, d3.event.y);
+        const endNode = hitTestNodes(x, y);
 
         dragLine
             .classed('hidden', true)
@@ -443,7 +454,7 @@ $(document).ready(function() {
 
         $statusText
             .hide()
-            .text('Done!')
+            .text('Success!')
             .fadeIn()
             .delay(2000)
             .fadeOut()

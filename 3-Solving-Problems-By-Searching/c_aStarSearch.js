@@ -205,7 +205,7 @@ AStarSearchRenderer.prototype.render = function() {
     nodes,
     function(node) {
       var isSelected = node.id === state.initialKey;
-      var elementOption = new Option(node.id, node.id, isSelected, isSelected);
+      var elementOption = new Option(node.text, node.id, isSelected, isSelected);
       this.dom.startNode.appendChild(elementOption);
     },
     this
@@ -217,7 +217,7 @@ AStarSearchRenderer.prototype.render = function() {
     nodes,
     function(node) {
       var isSelected = node.id === state.goalKey;
-      var elementOption = new Option(node.id, node.id, isSelected, isSelected);
+      var elementOption = new Option(node.text, node.id, isSelected, isSelected);
       this.dom.goalNode.appendChild(elementOption);
     },
     this
@@ -414,7 +414,7 @@ AStarSearchRenderer.templates = {
       '" id="' +
       node.id +
       'a">' +
-      node.id + 
+      node.text + 
       "</li>"
     );
   },
@@ -432,7 +432,7 @@ AStarSearchRenderer.templates = {
       '" id="' +
       node.id +
       'e">' +
-      node.id + 
+      node.text + 
       "</li>"
     );
   },
@@ -450,7 +450,7 @@ AStarSearchRenderer.templates = {
       'p" nodeKey="' + 
       node.id +
       '">' +
-      node.id +
+      node.text +
       "</span></td>" +
       "<td><span>" +
       node.totalCost +

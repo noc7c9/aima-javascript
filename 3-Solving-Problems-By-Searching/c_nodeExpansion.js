@@ -3,7 +3,8 @@ $(document).ready(function() {
 
   function init() {
     var graph = new DefaultGraph();
-    var graphProblem = new GraphProblem(graph.nodes, graph.edges, 'A', null);
+    var initialKey = Object.keys(graph.nodes)[0];
+    var graphProblem = new GraphProblem(graph.nodes, graph.edges, initialKey, null);
     var graphAgent = new GraphAgent(graphProblem);
     var options = new DefaultOptions();
     var frontierNodesAgent = new DrawFrontierAgent('frontierCanvas', 150, 250, graphProblem, options);
@@ -35,8 +36,8 @@ $(document).ready(function() {
       graphDrawAgent.unhighlight(nodeKey);
     };
 
-   	graphDrawAgent.nodeGroups['A']._renderer.elem.onmouseenter = options.nodes.frontier.onMouseEnter;
-    graphDrawAgent.nodeGroups['A']._renderer.elem.onmouseleave = options.nodes.frontier.onMouseLeave;
+   	graphDrawAgent.nodeGroups[initialKey]._renderer.elem.onmouseenter = options.nodes.frontier.onMouseEnter;
+    graphDrawAgent.nodeGroups[initialKey]._renderer.elem.onmouseleave = options.nodes.frontier.onMouseLeave;
 
     graphDrawAgent.reset();
     frontierNodesAgent.iterate();

@@ -141,6 +141,10 @@ var DefaultGraph = function() {
 
 // Structure for the graph problem for the simulations
 function GraphProblem(nodes, edges, initialKey, nextToExpand) {
+  if (!nodes[initialKey]) {
+    initialKey = Object.keys(nodes)[0];
+  }
+
   this.nodes = nodes;
   this.edges = edges;
   this.nodes[initialKey].state = 'frontier';

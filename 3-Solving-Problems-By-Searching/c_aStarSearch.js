@@ -78,6 +78,11 @@ AStarSearchRenderer.prototype.initializeProblemAndAgents = function() {
 AStarSearchRenderer.prototype.createGraphProblem = function() {
   // The default graph
   var graph = new GraphAStarSearch();
+
+  var _nodeIds = Object.keys(graph.nodes);
+  this.state.initialKey = _nodeIds[0];
+  this.state.goalKey = _nodeIds[_nodeIds.length - 1];
+
   var graphProblem = new GraphProblemAStarSearch(
     graph.nodes,
     graph.edges,

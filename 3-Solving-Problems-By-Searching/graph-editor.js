@@ -235,7 +235,8 @@ $(document).ready(function() {
             d3.select(this)
                 .raise()
 
-            _isEdgeDragging = d3.event.sourceEvent.ctrlKey;
+            const e = d3.event.sourceEvent;
+            _isEdgeDragging = e.ctrlKey || e.metaKey;
 
             if (_isEdgeDragging) {
                 onEdgeDragStart.apply(this, arguments);
@@ -343,7 +344,7 @@ $(document).ready(function() {
     function onBackgroundClickHandler() {
         const [x, y] = d3.mouse(d3.event.currentTarget);
 
-        if (d3.event.ctrlKey) {
+        if (d3.event.ctrlKey || d3.event.metaKey) {
             createNode(x, y);
         }
     }
@@ -351,7 +352,7 @@ $(document).ready(function() {
     function onNodeClickHandler(d) {
         d3.event.stopPropagation();
 
-        if (d3.event.ctrlKey && d3.event.shiftKey) {
+        if ((d3.event.ctrlKey || d3.event.metaKey) && d3.event.shiftKey) {
             deleteNode(d.id);
         }
     }
@@ -359,7 +360,7 @@ $(document).ready(function() {
     function onEdgeClickHandler(d) {
         d3.event.stopPropagation();
 
-        if (d3.event.ctrlKey && d3.event.shiftKey) {
+        if ((d3.event.ctrlKey || d3.event.metaKey) && d3.event.shiftKey) {
             deleteEdge(d[0], d[1]);
         }
     }

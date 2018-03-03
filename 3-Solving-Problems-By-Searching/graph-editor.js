@@ -344,7 +344,7 @@ $(document).ready(function() {
     function onBackgroundClickHandler() {
         const [x, y] = d3.mouse(d3.event.currentTarget);
 
-        if (d3.event.ctrlKey || d3.event.metaKey) {
+        if ((d3.event.ctrlKey || d3.event.metaKey) && !d3.event.shiftKey) {
             createNode(x, y);
         }
     }

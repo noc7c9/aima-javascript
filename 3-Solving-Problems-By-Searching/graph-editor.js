@@ -438,6 +438,14 @@ $(document).ready(function() {
     const $loadButton = $('#graphEditorLoadButton');
     const $statusText = $('#graphEditorStatusText');
 
+    const isMac = navigator.platform.toLowerCase().indexOf('mac') >= 0;
+    if (isMac) {
+        $('#graphEditorInstructions li').each(function () {
+            $this = $(this);
+            $this.text($this.text().replace('Ctrl', 'Cmd'))
+        })
+    }
+
     $toggleButton.on('click', function () {
         $graphEditor.toggleClass('collapsed');
         const verb = $graphEditor.hasClass('collapsed') ? 'Show' : 'Hide';

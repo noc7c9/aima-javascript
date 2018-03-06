@@ -155,7 +155,15 @@
 
       <div class="row">
         <div class="col-md-6">
-          <div class='btn btn-primary' id='nodeRestartButton'>Restart</div>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class='btn btn-primary' id='nodeRestartButton'>Restart</div>
+            </div>
+            <div class="col-sm-6">
+              <label>Start node</label>
+              <select id="nodeExpansion-startNode" class="form-control"></select>
+            </div>
+          </div>
           <div class="canvas" id='nodeExpansionCanvas' height="400px">
           </div>
         </div>
@@ -192,7 +200,15 @@
 
       <div class="row">
         <div class="col-md-6">
-          <div class='btn btn-primary' id='agentViewRestartButton'>Restart</div>
+          <div class="row">
+            <div class="col-sm-3">
+                <div class='btn btn-primary' id='agentViewRestartButton'>Restart</div>
+            </div>
+            <div class="col-sm-6">
+              <label>Start node</label>
+              <select id="agentView-startNode" class="form-control"></select>
+            </div>
+          </div>
           <div class="canvas" id='agentViewCanvas' height="400px">
           </div>
         </div>
@@ -209,6 +225,14 @@
           <p>
             To achieve this, Breadth First Search Algorithm uses a FIFO(First In First Out) Queue. The following graph is explored by a Breadth First Search Algorithm with 'A' as the initial node.
           </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Start node</label>
+          <select id="bfs-startNode" class="form-control"></select>
+          <label></label>
         </div>
       </div>
 
@@ -247,6 +271,14 @@
           <p>
             To achieve this, Depth First Search Algorithm uses a LIFO(Last In First Out) Queue. The following graph is explored by a Depth First Search Algorithm with 'A' as the initial node.
           </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Start node</label>
+          <select id="dfs-startNode" class="form-control"></select>
+          <label></label>
         </div>
       </div>
 
@@ -299,6 +331,14 @@
       </div>
 
       <div class="row">
+        <div class="col-sm-6">
+          <label>Start node</label>
+          <select id="cost-startNode" class="form-control"></select>
+          <label></label>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-md-6">
           <div class="canvas" id="no-costGraphCanvas" height="300px">
           </div>
@@ -342,6 +382,14 @@
           <p>
             At any point of time in the process of a Uniform Cost Search, the costs of the explored nodes are always less than or equal to the costs of the frontier nodes (and also unexplored nodes as a matter of fact).
           </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Start node</label>
+          <select id="ucs-startNode" class="form-control"></select>
+          <label></label>
         </div>
       </div>
 
@@ -409,10 +457,14 @@
       <div class="row">
         <div class="col-md-6">
           <div class="row">
-            <div class="form-group col-md-4">
+            <div class="col-sm-6">
               <h4>Depth Limit : </h4>
-              <input type="range" id="limitSelector" name="rangeInput" step="1" min="0" max="5" value="2">
-              <label id="limitSelectorText">2</label>
+              <input type="range" id="depthLimited-limitSelector" name="rangeInput" step="1" min="0" max="5" value="2">
+              <label id="depthLimited-limitSelectorText">2</label>
+            </div>
+            <div class="col-sm-6">
+              <label>Start node</label>
+              <select id="depthLimited-startNode" class="form-control"></select>
             </div>
           </div>
           <div class="row">
@@ -454,11 +506,17 @@
           <div class='btn btn-primary' id='idRestartButton'>Restart</div>
           <div class="row">
 
-            <div class="form-group col-md-4">
+            <div class="col-sm-6">
               <h4>Depth Limit : </h4>
-              <input disabled type="range" id="idlimitSelector" name="rangeInput" step="1" min="0" max="5" value="0">
+              <input type="range" id="idlimitSelector" name="rangeInput" step="1" min="0" max="5" value="0">
               <label id="idlimitSelectorText">0</label>
             </div>
+
+            <div class="col-sm-6">
+              <label>Start node</label>
+              <select id="id-startNode" class="form-control"></select>
+            </div>
+
           </div>
           <div class="row">
             <div class="canvas" id="iterativeDeepeningCanvas" height="300px">
@@ -622,7 +680,9 @@
 
   <script src="../globalHelpers.js"></script>
   <script src="./helpers.js"></script>
+  <script src="./startNodeSelectBox.js"></script>
   <script src="./graph-editor.js"></script>
+  <script src="./d3GraphRender.js"></script>
   <script src="./gitter-grid.js"></script>
   <script src="./aStarSearch.js"></script>
   <script src="./bestFirstSearch.js"></script>

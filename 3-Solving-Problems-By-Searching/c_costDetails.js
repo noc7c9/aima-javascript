@@ -6,6 +6,9 @@ $(document).ready(function() {
     ucsPathCanvas = null;
   var bfsTwo = null,
     ucsTwo = null;
+
+  const startNodeSelectBox = new StartNodeSelectBox('#cost-startNode')
+
   //function to color the given path in the graph in the front end
   var colorPathInGraph = function(graphDrawAgent, path) {
       let nodeGroups = graphDrawAgent.nodeGroups;
@@ -64,7 +67,11 @@ $(document).ready(function() {
 
   function init() {
     var graph = new DefaultGraph();
-    var graphProblem = new GraphProblem(graph.nodes, graph.edges, 'A', null);
+
+    const initialKey = startNodeSelectBox.get(Object.keys(graph.nodes)[0]);
+    startNodeSelectBox.refresh(graph.nodes, initialKey);
+
+    var graphProblem = new GraphProblem(graph.nodes, graph.edges, initialKey, null);
     var options = new DefaultOptions();
     var bfsGraphDrawAgent, ucsGraphDrawAgent;
     ucsPathCanvas = document.getElementById('lowestCostDetailCanvas');
@@ -84,8 +91,8 @@ $(document).ready(function() {
     var onMouseEnter = function() {
       let nodeKey = $(this).attr('nodeKey');
       //Find the shortest paths from the inital node to the node being hovered
-      bfsShortestPath = findShortestPath(breadthFirstSearch, nodeKey);
-      ucsShortestPath = findShortestPath(uniformCostSearch, nodeKey);
+      bfsShortestPath = findShortestPath(breadthFirstSearch, nodeKey, initialKey);
+      ucsShortestPath = findShortestPath(uniformCostSearch, nodeKey, initialKey);
       //Color those paths in the graph
       colorPathInGraph(bfsGraphDrawAgent, bfsShortestPath);
       colorPathInGraph(ucsGraphDrawAgent, ucsShortestPath);
@@ -124,6 +131,8 @@ $(document).ready(function() {
     ucsGraphDrawAgent = new GraphDrawAgent(graphProblem, 'costGraphCanvas', options, h, w);
   };
   init();
+
+    startNodeSelectBox.onChange(init);
 
     // FOR GRAPH EDITOR
     window.__CostDetailsInit = init;

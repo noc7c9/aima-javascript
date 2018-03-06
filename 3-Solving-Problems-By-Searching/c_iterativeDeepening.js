@@ -1,40 +1,74 @@
 $(document).ready(function() {
-  var DELAY = 2000;
-  var intervalFunction = null;
 
-  //Restart the simulation when limit is changed
-  function init() {
-    agent = new dlsDrawAgent('iterativeDeepeningCanvas');
-    //Restart the simulation when limit is changed
-    $('#idlimitSelector').change(function() {
-      let limit = $(this).val();
-      agent.iterate(limit);
-    });
-    //Draws graph for the first time
-    agent.iterate($('#idlimitSelector').val());
+    const DELAY = 2000;
+    let intervalFunction = null;
 
-    intervalFunction = setInterval(function() {
-      let limit = parseInt($('#idlimitSelector').val());
-      if (limit <= 4) {
-        $('#idlimitSelector').val(limit + 1);
-        $('#idlimitSelector').trigger('change');
-      } else {
-        clearInterval(intervalFunction, DELAY);
-      }
-    }, DELAY)
-  }
+    const $limitSelector = $('#idlimitSelector');
 
-  $('#idExpanded').css('background-color', 'hsl(200,50%,70%)');
-  $('#idFrontier').css('background-color', 'hsl(0,50%,75%)');
-  $('#idUnexplored').css('background-color', 'hsl(0, 2%, 76%)');
-  $('#idRestartButton').click(function() {
-    clearInterval(intervalFunction);
-    $('#idlimitSelector').val(0);
-    $('#idlimitSelector').trigger('change');
+    const startNodeSelectBox = new StartNodeSelectBox('#id-startNode')
+
+    let depthLimit = 2;
+    let maxDepth;
+
+    function init() {
+        let graph = new DefaultGraph();
+        const startNode = startNodeSelectBox.get(
+            graph.nodes[Object.keys(graph.nodes)[0]].id);
+
+        let searchedGraph = my_depthLimitedSearch(graph, startNode, depthLimit);
+
+        // handle case of new max depth being smaller than depthLimit
+        // ugly, but just rerun the algorithm
+        if (depthLimit > searchedGraph.maxDepth) {
+            depthLimit = searchedGraph.maxDepth;
+            searchedGraph = my_depthLimitedSearch(graph, startNode, depthLimit);
+        }
+
+        // $limitSelector.attr('value', depthLimit);
+        $limitSelector.get(0).value = depthLimit;
+        $('#idlimitSelectorText').text(`Iteration ${depthLimit + 1}, Depth Limit: ${depthLimit}`);
+
+        maxDepth = searchedGraph.maxDepth;
+
+        d3GraphRender('#iterativeDeepeningCanvas', searchedGraph);
+
+        $limitSelector.attr('max', searchedGraph.maxDepth);
+
+        startNodeSelectBox.refresh(searchedGraph.nodes, startNode);
+
+        clearInterval(intervalFunction);
+        intervalFunction = setInterval(function () {
+            if (depthLimit < maxDepth) {
+                depthLimit += 1;
+                init();
+            } else {
+                clearInterval(intervalFunction);
+            }
+        }, DELAY)
+    }
+
     init();
-  });
-  init();
-  $('#idlimitSelector').on('input change', function() {
-    $('#idlimitSelectorText').text($(this).val());
-  });
+
+    $('#idExpanded').css('background-color', 'hsl(200,50%,70%)');
+    $('#idFrontier').css('background-color', 'hsl(0,50%,75%)');
+    $('#idUnexplored').css('background-color', 'hsl(0, 2%, 76%)');
+
+    $limitSelector.on('input change', function() {
+        depthLimit = parseInt($(this).val());
+        init();
+    });
+
+    startNodeSelectBox.onChange(function () {
+        depthLimit = 0;
+        init();
+    })
+
+    $('#idRestartButton').click(function() {
+        depthLimit = 0;
+        init();
+    });
+
+    // FOR GRAPH EDITOR
+    window.__IterativeDeepeningInit = init;
+
 });

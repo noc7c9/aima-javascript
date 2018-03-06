@@ -1,10 +1,10 @@
-var findShortestPath = function(nextNodeFunction, final) {
+var findShortestPath = function(nextNodeFunction, final, startNode) {
   var shortestPath = {
     path: [],
     cost: 0
   }
   let graph = new DefaultGraph();
-  problem = new GraphProblem(graph.nodes, graph.edges, 'A', null);
+  problem = new GraphProblem(graph.nodes, graph.edges, startNode, null);
   //Make a new problem fromt the graph and solve it using the given nextNodeFunction
   let agent = new GraphAgent(problem, 'ucs');
   while (problem.frontier.length > 0) {

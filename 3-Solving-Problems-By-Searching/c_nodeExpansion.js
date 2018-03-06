@@ -1,15 +1,21 @@
 $(document).ready(function() {
   var w = 600, h = 350;
 
+  const startNodeSelectBox = new StartNodeSelectBox('#nodeExpansion-startNode')
+
   function init() {
     var graph = new DefaultGraph();
-    var initialKey = Object.keys(graph.nodes)[0];
+
+    const initialKey = startNodeSelectBox.get(Object.keys(graph.nodes)[0]);
+    startNodeSelectBox.refresh(graph.nodes, initialKey);
+
     var graphProblem = new GraphProblem(graph.nodes, graph.edges, initialKey, null);
     var graphAgent = new GraphAgent(graphProblem);
     var options = new DefaultOptions();
     var frontierNodesAgent = new DrawFrontierAgent('frontierCanvas', 150, 250, graphProblem, options);
 
     var graphDrawAgent = new GraphDrawAgent(graphProblem, 'nodeExpansionCanvas', options, h, w);
+
 
     //Function to execute whenever a node is clicked
     var clickHandler = function() {
@@ -45,6 +51,8 @@ $(document).ready(function() {
   $('#nodeRestartButton').click(init);
   init();
 
+    startNodeSelectBox.onChange(init);
+
     // FOR GRAPH EDITOR
     window.__NodeExpansionInit = init;
 });
@@ -54,11 +62,15 @@ $(document).ready(function() {
     h = 350;
   var options = new DefaultOptions();
 
+  const startNodeSelectBox = new StartNodeSelectBox('#agentView-startNode')
+
   function init() {
     var graph = new DefaultGraph();
-    var nodeIds = Object.keys(graph.nodes)
-    var randomId = nodeIds[Math.floor(Math.random() * nodeIds.length)]
-    var graphProblem = new GraphProblem(graph.nodes, graph.edges, randomId, null);
+
+    const initialKey = startNodeSelectBox.get(Object.keys(graph.nodes)[0]);
+    startNodeSelectBox.refresh(graph.nodes, initialKey);
+
+    var graphProblem = new GraphProblem(graph.nodes, graph.edges, initialKey, null);
     var graphAgent = new GraphAgent(graphProblem);
     var graphDrawAgent = new GraphDrawAgent(graphProblem, 'agentViewCanvas', options, h, w);
     //For this simulation, unexplored nodes and edges needs to be invisible
@@ -88,6 +100,8 @@ $(document).ready(function() {
   $('#legendFrontier').css('background-color', options.nodes.frontier.fill);
   $('#legendUnexplored').css('background-color', options.nodes.unexplored.fill);
   init();
+
+    startNodeSelectBox.onChange(init);
 
     // FOR GRAPH EDITOR
     window.__AgentViewInit = init;

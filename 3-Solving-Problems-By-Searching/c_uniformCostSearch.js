@@ -4,6 +4,8 @@ $(document).ready(function() {
   var DELAY = 2000;
   var intervalFunction = null;
 
+  const startNodeSelectBox = new StartNodeSelectBox('#ucs-startNode')
+
   function init() {
     clearInterval(intervalFunction, DELAY);
     var priorityQueueCanvas = document.getElementById('priorityQueueCanvas');
@@ -28,7 +30,12 @@ $(document).ready(function() {
 
     var drawState = function(n) {
       var graph = new DefaultGraph();
-      var graphProblem = new GraphProblem(graph.nodes, graph.edges, 'A', 'A');
+
+      const initialKey = startNodeSelectBox.get(Object.keys(graph.nodes)[0]);
+      startNodeSelectBox.refresh(graph.nodes, initialKey);
+
+      var graphProblem = new GraphProblem(graph.nodes, graph.edges,
+        initialKey, initialKey);
       var graphAgent = new GraphAgent(graphProblem);
       for (key in graphProblem.nodes) {
         graphProblem.nodes[key].text = costMap[graphProblem.nodes[key].id];
@@ -107,6 +114,8 @@ $(document).ready(function() {
   $('#ucsNextNode').css('background-color', 'hsl(126, 100%, 69%)');
   $('#ucsExploredNode').css('background-color', 'hsl(200,50%,70%)');
   init();
+
+    startNodeSelectBox.onChange(init);
 
     // FOR GRAPH EDITOR
     window.__UniformCostSearchInit = init;

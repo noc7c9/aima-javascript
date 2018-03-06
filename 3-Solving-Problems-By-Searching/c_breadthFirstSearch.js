@@ -3,13 +3,20 @@ $(document).ready(function() {
     h = 350;
   var intervalFunction = null;
 
+  const startNodeSelectBox = new StartNodeSelectBox('#bfs-startNode')
+
   function init() {
     var options = new DefaultOptions();
     options.nodes.next.fill = 'hsla(126, 100%, 69%, 1)';
 
     var drawState = function(n) {
       var graph = new DefaultGraph();
-      var graphProblem = new GraphProblem(graph.nodes, graph.edges, 'A', 'A');
+
+      const initialKey = startNodeSelectBox.get(Object.keys(graph.nodes)[0]);
+      startNodeSelectBox.refresh(graph.nodes, initialKey);
+
+      var graphProblem = new GraphProblem(graph.nodes, graph.edges,
+        initialKey, initialKey);
       var graphAgent = new GraphAgent(graphProblem);
 
       var graphDrawAgent = new GraphDrawAgent(graphProblem, 'breadthFirstSearchCanvas', options, h, w);
@@ -68,6 +75,8 @@ $(document).ready(function() {
   $('#fifoWaiting').css('background-color', 'hsl(0,50%,75%)');
   $('#fifoNextNode').css('background-color', 'hsl(126, 100%, 69%)');
   init();
+
+    startNodeSelectBox.onChange(init);
 
     // FOR GRAPH EDITOR
     window.__BreadthFirstSearchInit = init;

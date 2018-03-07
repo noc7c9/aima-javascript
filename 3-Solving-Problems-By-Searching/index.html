@@ -544,7 +544,108 @@
       <p>The motivation behind this is that <b>b<sup>d/2</sup> + b<sup>d/2</sup> is smaller than b<sup>d</sup></b></p>
       <p>In the diagram below, we compare the performance between bi-directional BFS and standard BFS side by side. The total number of nodes generated for each strategy is given below the diagram.</p>
       <p>Notice that the further apart the final node is from the initial node, the better bi-directional BFS performs (as compared to standard BFS). Use the restart button to restart the simulation.</p>
+
+    <div class="row" id="bi-directional-small">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-sm-3 col-md-3">
+                    <label>Start node</label>
+                    <select id="bdbfs-startNode" class="form-control">
+                    </select>
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    <label>Goal node</label>
+                    <select id="bdbfs-goalNode" class="form-control">
+                    </select>
+                </div>
+                <div class="col-sm-7 col-md-7">
+                    <div style="margin-top: 10px;">
+                        <input id="bdbfs-slider"
+                            type="range"
+                            min="0"
+                            step="1"
+                            value="0"
+                            class="form-control"
+                            style="padding: 6px 0; width: 84%;">
+                        <div class="btn-group">
+                            <button id="bdbfs-stepBackward"
+                                type="button"
+                                class="btn btn-default">
+                                <i class="glyphicon glyphicon-step-backward"></i>
+                            </button>
+                            <button id="bdbfs-stepForward"
+                                type="button"
+                                class="btn btn-default">
+                                <i class="glyphicon glyphicon-step-forward"></i>
+                            </button>
+                            <button id="bdbfs-reset"
+                                type="button"
+                                class="btn btn-primary">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="canvas" id="bdbfsCanvas" style="height: 300px;"></div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="notes">
+                <ul type="none">
+                    <li>
+                        <i id='bdbfsLegendUnexplored' class="legend-item"></i>
+                        Unknown Nodes
+                    </li>
+                    <li>
+                        <i id='bdbfsLegendMeeting' class="legend-item"></i>
+                        Node Where Both BFS Met
+                    </li>
+
+                    <li><br>For BFS from Start Node</li>
+                    <li>
+                        <i id='bdbfsLegendExpandedStart' class="legend-item"></i>
+                        Expanded Node
+                    </li>
+                    <li>
+                        <i id='bdbfsLegendNextStart' class="legend-item"></i>
+                        Next Node to be Expanded
+                    </li>
+
+                    <li><br>For BFS from Goal Node</li>
+                    <li>
+                        <i id='bdbfsLegendExpandedGoal' class="legend-item"></i>
+                        Expanded Node
+                    </li>
+                    <li>
+                        <i id='bdbfsLegendNextGoal' class="legend-item"></i>
+                        Next Node to be Expanded
+                    </li>
+                </ul>
+            </div>
+            <div class='row'>
+                <div class="col-sm-6 explanation-container explanation-area">
+                    <center>
+                        <h4>Start FIFO Queue</h4>
+                        <div id="bdbfsStartQueueCanvas"></div>
+                    </center>
+                </div>
+                <div class="col-sm-6 explanation-container explanation-area">
+                    <center>
+                        <h4>Goal FIFO Queue</h4>
+                        <div id="bdbfsGoalQueueCanvas"></div>
+                    </center>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
       <div id='bi-directional'>
+        <h3>Larger Example</h3>
+
         <div class="row">
           <div class='btn btn-primary restart-button'>Restart</div>
         </div>
@@ -703,6 +804,7 @@
   <script src="./c_uniformCostSearch.js"></script>
   <script src="./c_nodeExpansion.js"></script>
   <script src="./c_costDetails.js"></script>
+  <script src="./c_bi-directional-small.js"></script>
   <script src="./c_bi-directional.js"></script>
 </body>
 </html>

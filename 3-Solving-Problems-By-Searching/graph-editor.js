@@ -461,6 +461,7 @@ $(document).ready(function() {
         __UniformCostSearchInit();
         __DepthLimitedSearchInit();
         __IterativeDeepeningInit();
+        __BiDirectionalBFSInit();
         __AStarSearchInit();
 
         $statusText

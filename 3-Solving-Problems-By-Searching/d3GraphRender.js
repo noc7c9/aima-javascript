@@ -17,7 +17,7 @@ const DEFAULT_NODE_STYLES = {
         fill: 'Crimson',
     },
     next: {
-        fill: 'hsl(200,50%,70%)',
+        fill: 'hsl(126,100%,69%)',
     },
 }
 
@@ -29,8 +29,10 @@ const EDGE_STYLES = {
 function d3GraphRender(canvasContainerSelector, graph, options) {
     options = options || {};
     const canvasWidth = options.width || WIDTH;
-    const canvasHeight = options.width || HEIGHT;
+    const canvasHeight = options.height || HEIGHT;
     const nodeStyles = buildNodeStyles(options.styles || {});
+
+    const renderEdgeCosts = !!options.renderEdgeCosts;
 
     const canvasContainer = d3.select(canvasContainerSelector);
 
@@ -46,7 +48,7 @@ function d3GraphRender(canvasContainerSelector, graph, options) {
         .attr('text-anchor', 'middle')
         .attr('dominant-baseline', 'middle')
 
-    renderAllEdges(canvas, graph);
+    renderAllEdges(canvas, graph, renderEdgeCosts);
     renderAllNodes(canvas, graph, nodeStyles);
 }
 
@@ -74,7 +76,7 @@ function renderAllNodes(canvas, graph, styles) {
         })
 }
 
-function renderAllEdges(canvas, graph) {
+function renderAllEdges(canvas, graph, renderEdgeCosts) {
     let edges = canvas.selectAll('.edge')
         .data(graph.edges, ([a, b, _]) => [a, b].sort().join('|'))
 
@@ -95,26 +97,58 @@ function renderAllEdges(canvas, graph) {
                 .attr('x2', (d) => d.n2.x)
                 .attr('y2', (d) => d.n2.y)
 
-            edge.append('text')
-                .attr('dominant-baseline', 'middle')
-                .each((d) => {
-                    d.cost = d[2];
-                    d.costPos = getEdgeCostLocation(d.n1.x, d.n1.y, d.n2.x, d.n2.y);
-                })
-                .text((d) => d.cost)
-                .attr('x', (d) => d.costPos.x)
-                .attr('y', (d) => d.costPos.y)
+            if (renderEdgeCosts) {
+                edge.append('text')
+                    .attr('dominant-baseline', 'middle')
+                    .each((d) => {
+                        d.cost = d[2];
+                        d.costPos = getEdgeCostLocation(d.n1.x, d.n1.y, d.n2.x, d.n2.y);
+                    })
+                    .text((d) => d.cost)
+                    .attr('x', (d) => d.costPos.x)
+                    .attr('y', (d) => d.costPos.y)
+            }
         })
 }
 
 function buildNodeStyles(userStyles) {
     const styles = Object.assign({}, DEFAULT_NODE_STYLES);
     const keys = Object.keys(Object.assign({}, styles, userStyles));
+    const defaultStyle = Object.assign({},
+        DEFAULT_NODE_STYLES.default, userStyles.default || {})
     for (key of keys) {
         styles[key] = Object.assign({},
-            DEFAULT_NODE_STYLES.default,
+            defaultStyle,
             styles[key] || {},
             userStyles[key] || {});
     }
     return styles;
+}
+
+function d3QueueRender(canvasContainerSelector, queue, options) {
+    options = options || {};
+    const radius = ((options.styles || {}).default || {}).radius || 16;
+    const width = options.width || 400;
+    const padding = options.padding || 4;
+
+    const fauxGraph = {
+        nodes: {},
+        edges: [],
+    }
+
+    let x = radius + padding;
+    let y = radius + padding;
+    for (let node of queue) {
+        fauxGraph.nodes[node.id] = {
+            x, y, id: node.id, text: node.text, state: node.state,
+        }
+
+        x += radius * 2 + padding;
+        if (x > width) {
+            y += radius * 2 + padding;
+            x = radius + padding;
+        }
+    }
+
+    d3GraphRender(canvasContainerSelector, fauxGraph, options);
 }

@@ -8,8 +8,7 @@ $(document).ready(function() {
 
     function init() {
         let graph = new DefaultGraph();
-        const startNode = startNodeSelectBox.get(
-            graph.nodes[Object.keys(graph.nodes)[0]].id);
+        const startNode = startNodeSelectBox.get(Object.keys(graph.nodes)[0]);
 
         let searchedGraph = my_depthLimitedSearch(graph, startNode, depthLimit);
 

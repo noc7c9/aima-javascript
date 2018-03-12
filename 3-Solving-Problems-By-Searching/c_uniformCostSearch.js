@@ -37,9 +37,9 @@ $(document).ready(function() {
       var graphProblem = new GraphProblem(graph.nodes, graph.edges,
         initialKey, initialKey);
       var graphAgent = new GraphAgent(graphProblem);
-      for (key in graphProblem.nodes) {
-        graphProblem.nodes[key].text = costMap[graphProblem.nodes[key].id];
-      }
+      // for (key in graphProblem.nodes) {
+      //   graphProblem.nodes[key].text = costMap[graphProblem.nodes[key].id];
+      // }
 
       var graphDrawAgent = new GraphDrawAgent(graphProblem, 'uniformCostSearchCanvas', options, h, w);
       var maxCost;

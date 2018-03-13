@@ -28,6 +28,7 @@ class BidirectionalDiagram {
     this.destBFSColor = 'hsl(209, 30%, 50%)';
     this.sourceColor = 'hsl(209, 100%, 20%)';
     this.destColor = 'hsl(209, 100%, 20%)';
+    this.meetColor = 'rgb(255, 164, 102)',
     this.nodeSize = 3.5;
     this.textColorScale = d3.scaleLinear().domain([0, this.nodes.length / 2])
       .interpolate(d3.interpolateRgb)
@@ -96,6 +97,7 @@ class BidirectionalDiagram {
         this.colorNode(next.dest, this.destBFSColor)
       }
       if (next.done) {
+        this.colorNode(next.doneNode, this.meetColor)
         clearInterval(this.intervalFunction)
       }
     }, this.delay);

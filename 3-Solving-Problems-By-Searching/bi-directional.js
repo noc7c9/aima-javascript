@@ -109,6 +109,7 @@ class BidirectionalProblem {
     obj.source = nextNode;
     if (!this.destBFS.state[nextNode]) {
       obj.done = true;
+      obj.doneNode = obj.source;
     }
 
     //Iterate Destination side BFS
@@ -116,6 +117,7 @@ class BidirectionalProblem {
     obj.dest = nextNode;
     if (!this.sourceBFS.state[nextNode]) {
       obj.done = true;
+      obj.doneNode = obj.dest;
     }
     return obj;
   }

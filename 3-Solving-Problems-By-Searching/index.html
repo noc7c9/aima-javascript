@@ -458,13 +458,19 @@
         <div class="col-md-6">
           <div class="row">
             <div class="col-sm-6">
-              <h4>Depth Limit : </h4>
-              <input type="range" id="depthLimited-limitSelector" name="rangeInput" step="1" min="0" max="5" value="2">
-              <label id="depthLimited-limitSelectorText">2</label>
-            </div>
-            <div class="col-sm-6">
               <label>Start node</label>
               <select id="depthLimited-startNode" class="form-control"></select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Depth Limit : </h4>
+              <div class="col-sm-3 btn btn-default" id="depthLimited-prev">Previous</div>
+              <div class="col-sm-6">
+                <input type="range" id="depthLimited-limitSelector" name="rangeInput" step="1" min="0" max="5" value="2">
+              </div>
+              <div class="col-sm-3 btn btn-default" id="depthLimited-next">Next</div>
+              <label id="depthLimited-limitSelectorText">2</label>
             </div>
           </div>
           <div class="row">
@@ -504,20 +510,25 @@
       <div class="row">
         <div class="col-md-6">
           <div class='btn btn-primary' id='idRestartButton'>Restart</div>
+
           <div class="row">
-
-            <div class="col-sm-6">
-              <h4>Depth Limit : </h4>
-              <input type="range" id="idlimitSelector" name="rangeInput" step="1" min="0" max="5" value="0">
-              <label id="idlimitSelectorText">0</label>
-            </div>
-
             <div class="col-sm-6">
               <label>Start node</label>
               <select id="id-startNode" class="form-control"></select>
             </div>
-
           </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <h4>Depth Limit:</h4>
+              <div class="col-sm-3 btn btn-default" id="id-prev">Previous</div>
+              <div class="col-sm-6">
+                <input type="range" id="idlimitSelector" name="rangeInput" step="1" min="0" max="5" value="2">
+              </div>
+              <div class="col-sm-3 btn btn-default" id="id-next">Next</div>
+              <label id="id-limitSelectorText">2</label>
+            </div>
+          </div>
+
           <div class="row">
             <div class="canvas" id="iterativeDeepeningCanvas" height="300px">
             </div>

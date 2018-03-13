@@ -10,6 +10,8 @@ $(document).ready(function() {
         let graph = new DefaultGraph();
         const startNode = startNodeSelectBox.get(Object.keys(graph.nodes)[0]);
 
+        depthLimit = Math.max(0, depthLimit);
+
         let searchedGraph = my_depthLimitedSearch(graph, startNode, depthLimit);
 
         // handle case of new max depth being smaller than depthLimit
@@ -17,10 +19,10 @@ $(document).ready(function() {
         if (depthLimit > searchedGraph.maxDepth) {
             depthLimit = searchedGraph.maxDepth;
             searchedGraph = my_depthLimitedSearch(graph, startNode, depthLimit);
-
-            $limitSelector.attr('value', depthLimit);
-            $('#depthLimited-limitSelectorText').text(depthLimit);
         }
+
+        $limitSelector.get(0).value = depthLimit;
+        $('#depthLimited-limitSelectorText').text(depthLimit);
 
         d3GraphRender('#depthLimitedSearchCanvas', searchedGraph);
 
@@ -37,11 +39,20 @@ $(document).ready(function() {
 
     $limitSelector.on('input change', function() {
         depthLimit = parseInt($(this).val());
-        $('#depthLimited-limitSelectorText').text($(this).val());
         init();
     });
 
     startNodeSelectBox.onChange(init);
+
+    $('#depthLimited-prev').on('click', function () {
+        depthLimit -= 1;
+        init();
+    })
+
+    $('#depthLimited-next').on('click', function () {
+        depthLimit += 1;
+        init();
+    })
 
     // FOR GRAPH EDITOR
     window.__DepthLimitedSearchInit = init;

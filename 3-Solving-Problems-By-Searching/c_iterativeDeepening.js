@@ -14,6 +14,8 @@ $(document).ready(function() {
         let graph = new DefaultGraph();
         const startNode = startNodeSelectBox.get(Object.keys(graph.nodes)[0]);
 
+        depthLimit = Math.max(0, depthLimit);
+
         let searchedGraph = my_depthLimitedSearch(graph, startNode, depthLimit);
 
         // handle case of new max depth being smaller than depthLimit
@@ -25,7 +27,7 @@ $(document).ready(function() {
 
         // $limitSelector.attr('value', depthLimit);
         $limitSelector.get(0).value = depthLimit;
-        $('#idlimitSelectorText').text(`Iteration ${depthLimit + 1}, Depth Limit: ${depthLimit}`);
+        $('#id-limitSelectorText').text(`Iteration ${depthLimit + 1}, Depth Limit: ${depthLimit}`);
 
         maxDepth = searchedGraph.maxDepth;
 
@@ -66,6 +68,16 @@ $(document).ready(function() {
         depthLimit = 0;
         init();
     });
+
+    $('#id-prev').on('click', function () {
+        depthLimit -= 1;
+        init();
+    })
+
+    $('#id-next').on('click', function () {
+        depthLimit += 1;
+        init();
+    })
 
     // FOR GRAPH EDITOR
     window.__IterativeDeepeningInit = init;

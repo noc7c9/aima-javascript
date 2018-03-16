@@ -1,3 +1,54 @@
+const defaultTree = {
+    text: 'l0',
+    leaves: [
+        {
+            text: 'l1-1',
+            leaves: [
+                { text: 'l2-1', },
+                { text: 'l2-2', },
+                {
+                    text: 'l2-3',
+                    leaves: [
+                        { text: 'l3-1', },
+                        { text: 'l3-2', },
+                        { text: 'l3-3', },
+                        { text: 'l3-1', },
+                        { text: 'l3-2', },
+                        { text: 'l3-3', },
+                        { text: 'l3-1', },
+                        { text: 'l3-2', },
+                        { text: 'l3-3', },
+                    ]
+                },
+            ],
+        },
+        {
+            text: 'l1-2',
+            leaves: [
+                { text: 'l2-4', },
+                { text: 'l2-5', },
+                { text: 'l2-6', },
+            ],
+        },
+        {
+            text: 'l1-3',
+            leaves: [
+                { text: 'l2-7', },
+                { text: 'l2-8', },
+                { text: 'l2-9', },
+            ],
+        },
+    ]
+}
+
+function minimaxInit() {
+    d3TreeRender('#minimaxCanvas', defaultTree);
+}
+
+$(document).ready(function () {
+    minimaxInit();
+})
+
 // Code for minimax
 function MAX_DECISION(state) {
 	var action_list = actions(state);

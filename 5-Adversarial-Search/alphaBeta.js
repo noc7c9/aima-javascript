@@ -1,36 +1,96 @@
-// Code for Alpha Beta Pruning
-function ALPHA_BETA_SEARCH(state) {
-	var largest_value = MAX_VALUE(state, 0, Number.MAX_SAFE_INTEGER);
-	var action_list = actions(state);
-	for (var action = 0; action < action_list.length; i++) {
-		if  (largest_value ==  utillity(RESULT(state, action_list[action]))) {
-			return action_list[action];
-		}
-	}
+function alphabetaDemo(startState) {
+    const frames = [];
+
+    const _keys = {}
+    function captureFrame(key) {
+        const clone = deepClone(startState)
+        clone.id = key + ' ' + (_keys[key] = (_keys[key] || 0) + 1)
+        frames.push(clone)
+    }
+
+    function maximizing(state, alpha, beta) {
+        if (state.leaves && state.leaves.length > 0) {
+            state.style = 'halflit';
+            state.text = `[${alpha}, ${beta}]`
+            captureFrame('maximizing pre');
+
+            let value = -Infinity;
+            for (let leafState of state.leaves) {
+                value = Math.max(value, minimizing(leafState, alpha, beta));
+                if (value >= beta) {
+                    break;
+                }
+                alpha = Math.max(alpha, value)
+
+                state.text = `[${alpha}, ${beta}]`
+                captureFrame('maximizing leaf');
+            }
+
+            // highlight selected leaf's edge
+            for (let leafState of state.leaves) {
+                if (leafState.text === value) {
+                    leafState.edgeStyle = 'lit';
+                }
+            }
+
+            state.style = 'lit';
+            state.text = value;
+            // captureFrame('maximizing post');
+
+            return value;
+        } else {
+            state.style = 'lit';
+
+            return state.text || 0;
+        }
+    }
+
+    function minimizing(state, alpha, beta) {
+        if (state.leaves && state.leaves.length > 0) {
+            state.style = 'halflit';
+            state.text = `[${alpha}, ${beta}]`
+            captureFrame('minimizing pre');
+
+            let value = Infinity;
+            for (let leafState of state.leaves) {
+                value = Math.min(value, maximizing(leafState, alpha, beta));
+                if (value <= alpha) {
+                    break;
+                }
+                beta = Math.min(beta, value)
+
+                state.text = `[${alpha}, ${beta}]`
+                captureFrame('minimizing leaf');
+            }
+
+            // highlight selected leaf's edge
+            for (let leafState of state.leaves) {
+                if (leafState.text === value) {
+                    leafState.edgeStyle = 'lit';
+                }
+            }
+
+            state.style = 'lit';
+            state.text = value;
+            // captureFrame('minimizing post');
+
+            return value;
+        } else {
+            state.style = 'lit';
+
+            return state.text || 0;
+        }
+    }
+
+    captureFrame('initial');
+
+    maximizing(startState, -Infinity, Infinity);
+
+    captureFrame('final');
+
+    return frames;
 }
-function MAX_VALUE(state, alpha, beta) {
-	if (terminal(state))
-		return utillity(state);
-	var largest_value = 0;
-	var action_list = actions(state);
-	for (var action = 0; action < action_list.length; action++) {
-		largest_value = Math.max(largest_value, MIN_VALUE(RESULT(state, action_list[action]), alpha, beta));
-		if (largest_value >= beta)
-			return largest_value;
-		alpha = Math.max(alpha, smallest_value);
-	}
-	return largest_value;
-}
-function MIN_VALUE(state, alpha, beta) {
-	if (terminal(state))
-		return utillity(state);
-	var smallest_value = Number.MAX_SAFE_INTEGER;
-	var action_list = actions(state);
-	for (var action = 0; action < action_list.length; action++) {
-		smallest_value = Math.min(smallest_value, MAX_VALUE(RESULT(state, action_list[action]), alpha, beta));
-		if (smallest_value <= alpha)
-			return smallest_value;
-		beta = Math.min(beta, smallest_value);
-	}
-	return smallest_value;
-}
+
+$(document).ready(function () {
+    uiSetup('alphabeta', alphabetaDemo);
+})

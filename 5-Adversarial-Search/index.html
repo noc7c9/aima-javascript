@@ -4,12 +4,14 @@
         <title>5 Adversarial Search</title>
         <link rel="stylesheet" href="../styles.css">
         <meta charset="UTF-8">
-        <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script type="text/javascript" src="../main.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min.js"></script>
         <script type="text/javascript" src="./d3TreeRender.js"></script>
+        <script type="text/javascript" src="./helpers.js"></script>
         <script type="text/javascript" src="./minimax.js"></script>
+        <script type="text/javascript" src="./alphabeta.js"></script>
 
         <style>
             svg {
@@ -37,11 +39,19 @@
                 <br>
             </p>
 
-            <input type="text" id="minimaxInput" size="60" value="6, 13, 8, 1, 99, 100, 14, 5, 2">
-            <button type="button" id="minimaxToggle" style="background-color: white; border: 1px solid black; font-size: 16px;">Stop Simulation</button>
+            <div>
+                <input class='col-sm-12' type="text" id="minimaxInput">
+            </div>
             <br>
             <br>
-            <input type="range" min="1" max="17" value="1" id="minimaxProgress">
+
+            <div>
+                <div class='col-sm-1 btn btn-primary' id='minimaxPrev'>Prev</div>
+                <div class='col-sm-10'>
+                    <input type="range" min="1" max="17" value="1" id="minimaxSlider">
+                </div>
+                <div class='col-sm-1 btn btn-primary' id='minimaxNext'>Next</div>
+            </div>
             <br>
             <div class="canvas" id="minimaxCanvas"></div>
 
@@ -55,13 +65,21 @@
                 <br>
             </p>
 
-            <input type="text" id="alphaBetaInput" size="60" value="6, 13, 8, 1, 99, 100, 14, 5, 2">
-            <button type="button" id="alphaBetaToggle" style="background-color: white; border: 1px solid black; font-size: 16px;">Start Simulation</button>
+            <div>
+                <input class='col-sm-12' type="text" id="alphabetaInput">
+            </div>
             <br>
             <br>
-            <input type="range" min="1" max="17" value="1" id="alphaBetaProgress">
+
+            <div>
+                <div class='col-sm-1 btn btn-primary' id='alphabetaPrev'>Prev</div>
+                <div class='col-sm-10'>
+                    <input type="range" min="1" max="17" value="1" id="alphabetaSlider">
+                </div>
+                <div class='col-sm-1 btn btn-primary' id='alphabetaNext'>Next</div>
+            </div>
             <br>
-            <div class="canvas" id="alphaBetaCanvas"></div>
+            <div class="canvas" id="alphabetaCanvas"></div>
 
         </div>
 

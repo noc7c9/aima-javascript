@@ -1,6 +1,6 @@
 (function () {
 
-const TRI_RADIUS = 20;
+const TRI_RADIUS = 26;
 
 const [WIDTH, HEIGHT] = [800, 400];
 
@@ -26,6 +26,7 @@ const DEFAULT_EDGE_STYLES = {
     unlit: {}, // same as default
     lit: {
         stroke: 'red',
+        strokeWidth: 3,
     },
 }
 
@@ -222,7 +223,7 @@ function treeToGraph(tree) {
     }
 
     let currId = 0;
-    function addNode(tree) {
+    function addNode(tree, orientation) {
         const id = currId;
         currId += 1;
 
@@ -230,17 +231,20 @@ function treeToGraph(tree) {
             x: tree.x,
             y: tree.y,
             id: id,
-            text: tree.text,
-            orientation: Math.random() > 0.5 ? 1 : -1,
+            text: tree.text !== undefined ? tree.text : '',
+            orientation: orientation,
+            style: tree.style,
+            edgeStyle: tree.edgeStyle
         }
 
         if (tree.leaves && tree.leaves.length) {
             tree.leaves.map(function (leaf) {
-                const leafId = addNode(leaf);
+                const leafId = addNode(leaf, -orientation);
 
                 graph.edges.push({
                     parentID: id,
                     childID: leafId,
+                    style: graph.nodes[leafId].edgeStyle,
                 });
             })
         }
@@ -248,7 +252,7 @@ function treeToGraph(tree) {
         return id;
     }
 
-    addNode(tree)
+    addNode(tree, 1)
 
     return graph;
 }

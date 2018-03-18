@@ -1,29 +1,3 @@
-const defaultTree = {
-    leaves: [
-        {
-            leaves: [
-                { text: 6, },
-                { text: 13, },
-                { text: 8, },
-            ],
-        },
-        {
-            leaves: [
-                { text: 1, },
-                { text: 99, },
-                { text: 100, },
-            ],
-        },
-        {
-            leaves: [
-                { text: 14, },
-                { text: 5, },
-                { text: 2, },
-            ],
-        },
-    ]
-}
-
 const defaultTreeSExpr = '((6 13 8) (1 99 100) (14 5 2))';
 function sExprToTree(sExpr) {
     function parseSExpr(chars) {
@@ -89,7 +63,15 @@ function uiSetup(selectorPrefix, animFramesAlgorithm) {
     let animFrames;
     let currFrameIndex;
 
-    function init() {
+    function init(sexpr) {
+        if (sexpr) {
+            const newTree = sExprToTree(sexpr)
+            if (newTree) {
+                tree = newTree;
+            }
+            $input.get(0).value = sexpr;
+        }
+
         animFrames = animFramesAlgorithm(tree);
 
         $slider
@@ -117,17 +99,17 @@ function uiSetup(selectorPrefix, animFramesAlgorithm) {
     $input.get(0).value = defaultTreeSExpr;
 
     $input.on('input', function () {
-        const newTree = sExprToTree(this.value)
-        if (newTree) {
-            tree = newTree;
-            init();
-        }
+        init(this.value);
     });
     $slider.on('input', function () {
         displayFrame(parseInt(this.value))
     })
     $prev.on('click', () => displayFrame(currFrameIndex - 1));
     $next.on('click', () => displayFrame(currFrameIndex + 1));
+
+    $(`.${selectorPrefix}Preset`).on('click', function () {
+        init(this.dataset.sexpr);
+    })
 
     init();
 }
